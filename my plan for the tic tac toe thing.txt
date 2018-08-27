@@ -1,0 +1,11 @@
+	
+	1. Make a console based tic-tac-toe game 
+	2. Make two dictionaries that map game state to a list of potential moves (that are sorted by probability of a good outcome) --> (dictionary? https://docs.python.org/2/tutorial/datastructures.html)
+	3. Make two bots to play it
+		Bot actions:
+			1. check current game state
+			2. search the list for game states, select the one with the highest win rate, play it, append it to temporary move list
+			3. Nothing in list? Move random, append move to the temporary list
+			4. At the end of the game, add the list of moves to the dictionary of possible moves with win rates (if new) or change win rate of existing moves (if not)
+
+ 
