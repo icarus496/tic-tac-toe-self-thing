@@ -70,7 +70,7 @@ class Game:
                 break
            except IndexError:
                break
-        #Diagonal wins bottom left to top right
+        #Diagonal wins bottom to the right
         while True:
             try:
                 if ((self.getSquare(recentY - 1, recentX + 1) == (recentValue)) and (self.getSquare(recentY - 2, recentX + 2) == (recentValue))): # Diagonally from bottom left
@@ -78,6 +78,17 @@ class Game:
                 if ((self.getSquare(recentY - 1, recentX + 1) == (recentValue)) and (self.getSquare(recentY + 1, recentX - 1) == (recentValue))):  # Diagonally from middle going right up
                     return True
                 if ((self.getSquare(recentY + 1, recentX - 1 ) == (recentValue)) and (self.getSquare(recentY + 2 , recentX - 2) == (recentValue))):  # Diagonally from top right
+                    return True
+            except IndexError:
+                break
+        #Diagonal wins to the left
+        while True:
+            try:
+                if ((self.getSquare(recentY - 1, recentX - 1 ) == (recentValue)) and (self.getSquare(recentY - 2 , recentX - 2) == (recentValue))):  # Diagonally from bottom right
+                    return True
+                if ((self.getSquare(recentY - 1, recentX - 1) == (recentValue)) and (self.getSquare(recentY + 1, recentX + 1) == (recentValue))):  # Diagonally from middle going left up
+                    return True
+                if ((self.getSquare(recentY + 1, recentX + 1) == (recentValue)) and (self.getSquare(recentY + 2, recentX + 2) == (recentValue))): # Diagonally from top left
                     return True
             except IndexError:
                 break
