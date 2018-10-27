@@ -4,7 +4,7 @@ class Game:
         self.turnNum = 0
         self.winner = None
         self.board = [[" "," "," "],[" ", " ", " "],[" ", " ", " "]]
-
+        self.recentSquare = None
     def drawBoard(self):  # draws the board one row at a time
         for row in range(len(self.board)):
             if row == 0:  # special case, allows me to print the column numbers
@@ -14,9 +14,10 @@ class Game:
                 print str(self.board[row][square]),  # print the item in that row
             print ""
 
-    def setSquare(self, row, column, value):
+    def setSquare(self, row, column, value): # Y then X
         self.board[row][column] = value
-
+    def getSquare(self, row, column): #Y then X
+            return self.board[row][column]
     def turn(self):
         self.drawBoard()
         if self.turnNum % 2 == 0:
@@ -37,8 +38,47 @@ class Game:
             else:
                 break
         self.setSquare(userSelectionY-1, userSelectionX-1, currentTurnLetter)
+        self.recentSquare = [userSelectionY-1, userSelectionX-1]
         self.turnNum += 1
         self.drawBoard()
+    def checkForWin(self):
+        recentX = self.recentSquare[1]
+        recentY = self.recentSquare[0]
+        recentValue = self.getSquare(recentY, recentX)
+        # Vertical Wins (Try-Catch is to avoid an index error when winning a different way)
+        while True:
+            try:
+                if ((self.getSquare(recentY-1, recentX) == (recentValue)) and (self.getSquare(recentY-2, recentX) == (recentValue))): #3 in a row vertically from bottom
+                    return True
+                if ((self.getSquare(recentY-1, recentX) == (recentValue)) and (self.getSquare(recentY+1, recentX) == (recentValue))): #Vertically from middle
+                    return True
+                if ((self.getSquare(recentY+1, recentX) == (recentValue)) and (self.getSquare(recentY+2, recentX) == (recentValue))): #Vertically from top
+                    return True
+            except IndexError:
+                break
+
+        #Horizontal Wins
+        while True:
+           try:
+                if ((self.getSquare(recentY, recentX + 1) == (recentValue)) and (self.getSquare(recentY, recentX + 2) == (recentValue))): #Horizontally from top
+                    return True
+                if ((self.getSquare(recentY, recentX - 1) == (recentValue)) and (self.getSquare(recentY, recentX + 1) == (recentValue))):  # Horizontally from middle
+                    return True
+                if ((self.getSquare(recentY, recentX - 1) == (recentValue)) and (self.getSquare(recentY, recentX - 2) == (recentValue))):  # Horizontally from bottom
+                    return True
+           except IndexError:
+               break
+        #DIagonal Wins
+        while True:
+            try:
+                if ((self.getSquare(recentY+1, recentX + 1) == (recentValue)) and (self.getSquare(recentY + 2, recentX + 2) == (recentValue))): # Diagonally from top
+                    return True
+                if ((self.getSquare(recentY - 1, recentX - 1) == (recentValue)) and (self.getSquare(recentY + 1, recentX + 1) == (recentValue))):  # Diagonally from middle
+                    return True
+                if ((self.getSquare(recentY - 1, recentX + 1 ) == (recentValue)) and (self.getSquare(recentY - 2 , recentX + 2) == (recentValue))):  # Diagonally from bottom
+                    return True
+            except IndexError:
+                break
 
 
 
@@ -52,5 +92,10 @@ class Game:
             movesList = self.moves[self.game.getGameState()]
             highestValue = 0;"""
 
-test = Game()  # for testing purposes
-
+test = Game()
+test.turn()# for testing purposes
+test.turn()
+test.turn()
+test.turn()
+test.turn()
+print test.checkForWin()
