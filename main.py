@@ -3,7 +3,7 @@ class Game:
     def __init__(self):
         self.turnNum = 0
         self.winner = None
-        self.board = [[" "," "," "],[" ", " ", " "],[" ", " ", " "]]
+        self.board = [[" "," "," "],[" ", " ", " "],[" ", " ", " "]] #(0,0) is top left
         self.recentSquare = None
     def drawBoard(self):  # draws the board one row at a time
         for row in range(len(self.board)):
@@ -54,6 +54,7 @@ class Game:
                     return True
                 if ((self.getSquare(recentY+1, recentX) == (recentValue)) and (self.getSquare(recentY+2, recentX) == (recentValue))): #Vertically from top
                     return True
+                break
             except IndexError:
                 break
 
@@ -66,16 +67,17 @@ class Game:
                     return True
                 if ((self.getSquare(recentY, recentX - 1) == (recentValue)) and (self.getSquare(recentY, recentX - 2) == (recentValue))):  # Horizontally from bottom
                     return True
+                break
            except IndexError:
                break
-        #DIagonal Wins
+        #Diagonal wins bottom left to top right
         while True:
             try:
-                if ((self.getSquare(recentY+1, recentX + 1) == (recentValue)) and (self.getSquare(recentY + 2, recentX + 2) == (recentValue))): # Diagonally from top
+                if ((self.getSquare(recentY - 1, recentX + 1) == (recentValue)) and (self.getSquare(recentY - 2, recentX + 2) == (recentValue))): # Diagonally from bottom left
                     return True
-                if ((self.getSquare(recentY - 1, recentX - 1) == (recentValue)) and (self.getSquare(recentY + 1, recentX + 1) == (recentValue))):  # Diagonally from middle
+                if ((self.getSquare(recentY - 1, recentX + 1) == (recentValue)) and (self.getSquare(recentY + 1, recentX - 1) == (recentValue))):  # Diagonally from middle going right up
                     return True
-                if ((self.getSquare(recentY - 1, recentX + 1 ) == (recentValue)) and (self.getSquare(recentY - 2 , recentX + 2) == (recentValue))):  # Diagonally from bottom
+                if ((self.getSquare(recentY + 1, recentX - 1 ) == (recentValue)) and (self.getSquare(recentY + 2 , recentX - 2) == (recentValue))):  # Diagonally from top right
                     return True
             except IndexError:
                 break
